@@ -5,6 +5,10 @@ import {
   Gem, ShieldCheck, Sparkles, HandHeart, ArrowRight,
 } from "lucide-react";
 import hero from "@/assets/hero-mangalsutra.jpg";
+import goldJewellery from "@/assets/collection-gold.jpg";
+import diamondJewellery from "@/assets/collection-diamond.jpg";
+import silverJewellery from "@/assets/collection-silver.jpg";
+import traditionalJewellery from "@/assets/collection-traditional.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,10 +35,10 @@ const NAV = [
 ] as const;
 
 const COLLECTIONS = [
-  { name: "Gold", file: "gold-jewellery.jpg", text: "Necklaces, bangles and heirloom pieces in lustrous gold." },
-  { name: "Diamond", file: "diamond-jewellery.jpg", text: "Brilliant designs for moments that deserve to shine." },
-  { name: "Silver", file: "silver-jewellery.jpg", text: "Graceful silver for daily wear and devotion." },
-  { name: "Traditional", file: "traditional-jewellery.jpg", text: "Classic Maharashtrian designs, lovingly crafted." },
+  { name: "Gold", image: goldJewellery, alt: "Floral gold necklace and matching jhumka earrings on burgundy velvet", text: "Necklaces, bangles and heirloom pieces in lustrous gold." },
+  { name: "Diamond", image: diamondJewellery, alt: "Diamond solitaire ring and tennis bracelet on pale stone", text: "Brilliant designs for moments that deserve to shine." },
+  { name: "Silver", image: silverJewellery, alt: "Intricate silver anklets, jhumka earrings and engraved bangle", text: "Graceful silver for daily wear and devotion." },
+  { name: "Traditional", image: traditionalJewellery, alt: "Maharashtrian thushi necklace, gold earrings and pearl nath on burgundy silk", text: "Classic Maharashtrian designs, lovingly crafted." },
 ];
 
 function Logo({ light = false }: { light?: boolean }) {
@@ -49,15 +53,10 @@ function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
-function Placeholder({ file, label, className = "" }: { file: string; label: string; className?: string }) {
+function JewelleryImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
-    <div className={`placeholder-art relative flex items-center justify-center overflow-hidden ${className}`}>
-      <div className="absolute inset-3 border border-gold/30" />
-      <div className="text-center">
-        <Gem className="mx-auto h-8 w-8 text-gold/70" strokeWidth={1} />
-        <p className="mt-3 font-serif text-lg italic text-gold-soft">{label}</p>
-        <p className="mt-1 text-[0.6rem] uppercase tracking-[0.25em] text-gold/50">{file}</p>
-      </div>
+    <div className={`relative overflow-hidden ${className}`}>
+      <img src={src} alt={alt} loading="lazy" decoding="async" width={1024} height={1360} className="absolute inset-0 h-full w-full object-cover" />
     </div>
   );
 }
@@ -188,7 +187,7 @@ function Index() {
           {COLLECTIONS.map((c) => (
             <article key={c.name} className="reveal group">
               <div className="relative overflow-hidden">
-                <Placeholder file={c.file} label={`${c.name} Jewellery`} className="aspect-[3/4] transition-transform duration-700 group-hover:scale-105" />
+                <JewelleryImage src={c.image} alt={c.alt} className="aspect-[3/4] transition-transform duration-700 group-hover:scale-105" />
                 <button aria-label={`Wishlist ${c.name}`} onClick={() => toggleWish(c.name)} className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-ivory/90 text-maroon">
                   <Heart className={`h-4 w-4 ${wish.includes(c.name) ? "fill-maroon" : ""}`} />
                 </button>
@@ -204,7 +203,7 @@ function Index() {
       {/* Story */}
       <section id="about" className="scroll-mt-24 bg-maroon px-5 py-20 text-ivory md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-          <Placeholder file="brand-story.jpg" label="Our Story" className="reveal aspect-[4/5] border border-gold/40" />
+          <JewelleryImage src={traditionalJewellery} alt="Traditional gold thushi necklace and handcrafted Maharashtrian jewellery on silk" className="reveal aspect-[4/5] border border-gold/40" />
           <div className="reveal">
             <p className="eyebrow">Our Story</p>
             <h2 className="mt-4 text-4xl md:text-6xl">Tradition in <em className="text-gold">Every Detail.</em></h2>
@@ -223,9 +222,14 @@ function Index() {
       <Section eyebrow="Gallery" title="A Glimpse of Our Craft">
         <div className="grid auto-rows-[160px] grid-cols-2 gap-4 md:auto-rows-[220px] md:grid-cols-4">
           {[
-            "md:col-span-2 md:row-span-2", "", "row-span-2", "", "md:col-span-2", "",
-          ].map((cls, i) => (
-            <Placeholder key={i} file={`gallery-0${i + 1}.jpg`} label="Coming soon" className={`reveal h-full ${cls}`} />
+            { cls: "md:col-span-2 md:row-span-2", src: goldJewellery, alt: "Gold floral necklace with matching earrings" },
+            { cls: "", src: diamondJewellery, alt: "Brilliant diamond ring and bracelet" },
+            { cls: "row-span-2", src: traditionalJewellery, alt: "Traditional Maharashtrian gold jewellery" },
+            { cls: "", src: silverJewellery, alt: "Detailed silver jewellery craftsmanship" },
+            { cls: "md:col-span-2", src: hero, alt: "Gold mangalsutra with circular pendant" },
+            { cls: "", src: diamondJewellery, alt: "Diamond solitaire and tennis bracelet detail" },
+          ].map((image, i) => (
+            <JewelleryImage key={i} src={image.src} alt={image.alt} className={`reveal h-full ${image.cls}`} />
           ))}
         </div>
       </Section>
