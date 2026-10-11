@@ -222,9 +222,14 @@ function Index() {
       <Section eyebrow="Gallery" title="A Glimpse of Our Craft">
         <div className="grid auto-rows-[160px] grid-cols-2 gap-4 md:auto-rows-[220px] md:grid-cols-4">
           {[
-            "md:col-span-2 md:row-span-2", "", "row-span-2", "", "md:col-span-2", "",
-          ].map((cls, i) => (
-            <JewelleryImage key={i} src={[goldJewellery, diamondJewellery, traditionalJewellery, silverJewellery, hero, diamondJewellery][i]} alt={["Gold floral necklace with matching earrings", "Brilliant diamond ring and bracelet", "Traditional Maharashtrian gold jewellery", "Detailed silver jewellery craftsmanship", "Gold mangalsutra with circular pendant", "Diamond solitaire and tennis bracelet detail"][i]} className={`reveal h-full ${cls}`} />
+            { cls: "md:col-span-2 md:row-span-2", src: goldJewellery, alt: "Gold floral necklace with matching earrings" },
+            { cls: "", src: diamondJewellery, alt: "Brilliant diamond ring and bracelet" },
+            { cls: "row-span-2", src: traditionalJewellery, alt: "Traditional Maharashtrian gold jewellery" },
+            { cls: "", src: silverJewellery, alt: "Detailed silver jewellery craftsmanship" },
+            { cls: "md:col-span-2", src: hero, alt: "Gold mangalsutra with circular pendant" },
+            { cls: "", src: diamondJewellery, alt: "Diamond solitaire and tennis bracelet detail" },
+          ].map((image, i) => (
+            <JewelleryImage key={i} src={image.src} alt={image.alt} className={`reveal h-full ${image.cls}`} />
           ))}
         </div>
       </Section>
